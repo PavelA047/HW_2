@@ -7,9 +7,7 @@ public class PhoneDirectory {
 
     static void add(String surname, String... phoneNumbers) {
         List<String> phones = new ArrayList<>(Arrays.asList(phoneNumbers));
-        for (int i = 0; i < phones.size(); i++) {
-            phoneDirectory.put(surname, phones);
-        }
+        phoneDirectory.put(surname, phones);
     }
 
     static List<String> get(String surname) {
