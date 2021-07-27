@@ -7,7 +7,11 @@ public class PhoneDirectory {
 
     static void add(String surname, String... phoneNumbers) {
         Set<String> phones = new TreeSet<>(Arrays.asList(phoneNumbers));
-        phoneDirectory.put(surname, phones);
+        try {
+            phoneDirectory.get(surname).addAll(phones);
+        } catch (NullPointerException e) {
+            phoneDirectory.put(surname, phones);
+        }
     }
 
     static Set<String> get(String surname) {
