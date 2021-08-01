@@ -38,8 +38,8 @@ public class Main {
         });
         Thread t2 = new Thread(() -> {
             for (int i = 0; i < arr2.length; i++) {
-                arr2[i] = (float) (arr2[i] * Math.sin(0.2f + (float) i / 5) * Math.cos(0.2f + (float) i / 5) *
-                        Math.cos(0.4f + (float) i / 2));
+                arr2[i] = (float) (arr2[i] * Math.sin(0.2f + (float) (i + SIZE / 2) / 5) * Math.cos(0.2f +
+                        (float) (i + SIZE / 2) / 5) * Math.cos(0.4f + (float) (i + SIZE / 2) / 2));
             }
             System.out.println(System.currentTimeMillis() - a);
         });
