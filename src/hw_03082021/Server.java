@@ -24,41 +24,30 @@ public class Server {
             Scanner scannerOut = new Scanner(System.in);
 
             Thread inThread = new Thread(() -> {
-                while (!Thread.interrupted()) {
+                while (true) {
                     String msgIn = scannerIn.nextLine();
                     if (msgIn.equals("/end")) {
                         System.out.println("Client disconnected");
                         break;
-                    }
-                    if (Thread.interrupted()) {
-                        break;
-                    }
-                    System.out.println("Client: " + msgIn);
-                }
-            });
-
-            Thread outThread = new Thread(() -> {
-                while (true) {
-                    String msgOut = scannerOut.nextLine();
-                    out.println(msgOut);
-                    if (msgOut.equals("/end")) {
-                        System.out.println("END");
-                        inThread.interrupt();
-                        break;
+                    } else {
+                        System.out.println("Client: " + msgIn);
                     }
                 }
             });
+            inThread.setDaemon(true);
             inThread.start();
-            outThread.start();
-            try {
-                inThread.join();
-                outThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+            while (true) {
+                String msgOut = scannerOut.nextLine();
+                if (msgOut.equals("/end")) {
+                    System.out.println("You are disconnected");
+                    out.println("/end");
+                    break;
+                } else {
+                    out.println(msgOut);
+                }
             }
-            scannerIn.close();
-            scannerOut.close();
-            out.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
